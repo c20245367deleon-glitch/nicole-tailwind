@@ -1,106 +1,251 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Nicole De Leon | Portfolio</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style type="text/tailwindcss">
-        @custom-variant dark (&:where(.dark, .dark *));
 
-@layer components {
-.btn-primary {
-@apply px-6 py-3 bg-red-800 text-white hover:bg-orange-400 transition-colors dark:bg-slate-700;
-}
-}
-</style>
+    <style>
+        :root {
+            --accent: #33095a;
+            --light: #910c74;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            transition: .3s;
+        }
+
+        body.blue-theme {
+            --accent: #2563eb;
+            --light: #06b6d4;
+        }
+
+        .gradient {
+            background: linear-gradient(135deg, var(--accent), var(--light));
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        .card {
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .space-section {
+            padding: 70px 20px;
+        }
+    </style>
 </head>
-<div class="flex justify-center gap-4 my-5">
-    <button id="switch"
-        class="bg-black text-white p-3 rounded-[20px] transition-colors duration-600 ease-in-out hover:bg-yellow-500">
-        SWITCH
-    </button>
-    <button id="toggledark"
-        class="bg-black text-white p-3 rounded-[20px] transition-colors duration-600 ease-in-out hover:bg-yellow-500">
-        Toggledark
-    </button>
-</div>
 
-<body class="text-center dark:bg-slate-900 bg-white text-slate-900 dark:text-white">
-    <h1 class="text-3xl font-bold">NICOLE DE LEON</h1>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-white">
 
-    <header>
-        <h1 class="text-3xl text-red-500 font-bold underline">
-            Hello world!
-        </h1>
-        <nav class="flex justify-between items-center mx-[50px] max-[600px]:flex-col">
-            <span class="text-green-500 text-[50px]">
-                @deleon
-            </span>
-            <ul class="flex gap-5 list-none max-[600px]:flex-col">
-                <li><a href="#projects" class="hover:text-red-500">Projects</a></li>
-                <li><a href="#services" class="hover:text-red-300">Services</a></li>
-                <li><a href="#contact" class="hover:text-red-200">Contact Me</a></li>
-            </ul>
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-10 border-b bg-white/90 p-4 backdrop-blur dark:bg-gray-950/90">
+        <nav class="mx-auto flex max-w-6xl items-center justify-between">
+            <a href="#home" class="text-xl font-bold gradient-text">Nicole.dev</a>
+
+            <div class="hidden gap-5 md:flex">
+                <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="flex gap-2">
+                <button id="colorBtn" class="rounded-lg border px-3 py-2"></button>
+                <button id="darkBtn" class="rounded-lg border px-3 py-2"></button>
+                <button id="menuBtn" class="rounded-lg border px-3 py-2 md:hidden"></button>
+            </div>
         </nav>
+
+        <div id="mobileMenu" class="hidden flex-col gap-4 p-4 md:hidden">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
     </header>
 
-    <main class="flex flex-wrap gap-[30px] p-[50px] m-[50px] max-[600px]:p-[15px]
-     max-[600px]:m-[10px]">
-        <!-- Projects -->
-        <section id="projects" class="flex-1 min-w-[280px] border-2 border-black p-5 
-        bg-pink-400 max-[600px]:min-w-0">
-            <h2 class="max-[768px]:text-[48px] max-[768px]:text-blue-500">
-                My Projects
-            </h2>
-            <p>
-                Personal portfolio, payroll system, company website,startup website, and compliance monitoring system.
-            </p>
+    <main>
+        <!-- HOME -->
+        <section id="home" class="space-section mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
+            <div>
+                <p class="mb-3 font-bold accent">WELCOME TO MY PORTFOLIO</p>
+                <h1 class="mb-4 text-4xl font-extrabold sm:text-6xl">
+                    Hi, I'm <span class="gradient-text">Nicole De Leon</span>
+                </h1>
+                <h2 class="mb-4 text-2xl font-bold">Aspiring Web Developer</h2>
+                <p class="mb-6 leading-7 text-gray-600 dark:text-gray-300">
+                    I enjoy creating beautiful, responsive websites using HTML,
+                    CSS, JavaScript, and Tailwind CSS.
+                </p>
+                <a href="#projects" class="gradient rounded-lg px-5 py-3 font-bold text-white">View Projects</a>
+                <a href="#contact" class="ml-2 inline-block rounded-lg border px-5 py-3">Contact Me</a>
+            </div>
+
+            <div class="flex justify-center">
+                <div
+                    class="gradient flex h-64 w-64 items-center justify-center rounded-full text-7xl font-bold text-white shadow-xl">
+                    ND
+                </div>
+            </div>
         </section>
-        <!-- Services -->
-        <section id="services" class="flex-1 min-w-[280px] border-2 border-gray-300 dark:border-slate-800 dark:bg-slate-900 p-5
-         bg-gray-500 max-[600px]:min-w-0">
-            <h2 class="max-[768px]:text-[48px] max-[768px]:text-blue-500">
-                My Services
-            </h2>
-            <p>
-                Website Creation, System Creation, AI Automation,Database Management, Project Management, Systems
-                Analyst
-            </p>
+
+        <!-- ABOUT -->
+        <section id="about" class="space-section bg-white dark:bg-gray-900">
+            <div class="mx-auto max-w-4xl text-center">
+                <h2 class="mb-6 text-3xl font-bold">About <span class="gradient-text">Me</span></h2>
+                <p class="leading-8 text-gray-600 dark:text-gray-300">
+                    I am Nicole De Leon, an aspiring web developer passionate about
+                    technology and website design. I am continuously improving my
+                    programming skills and learning to create user-friendly websites.
+                </p>
+
+                <div class="mt-8 grid gap-5 sm:grid-cols-3">
+                    <div class="card rounded-xl bg-purple-50 p-6 dark:bg-gray-800">
+                        <h3 class="mb-2 font-bold"> Web Development</h3>
+                        <p>Learning to build websites.</p>
+                    </div>
+                    <div class="card rounded-xl bg-pink-50 p-6 dark:bg-gray-800">
+                        <h3 class="mb-2 font-bold"> Creative Design</h3>
+                        <p>Exploring colors and layouts.</p>
+                    </div>
+                    <div class="card rounded-xl bg-blue-50 p-6 dark:bg-gray-800">
+                        <h3 class="mb-2 font-bold"> Learning</h3>
+                        <p>Developing new skills.</p>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- Contact -->
-        <section id="contact" class="flex-1 min-w-[280px] border-2 border-black p-5 
-        bg-violet-500 max-[600px]:min-w-0">
-            <h2 class="max-[768px]:text-[48px] max-[768px]:text-blue-500">
-                Let's build together!
-            </h2>
-            <form action="#" class="flex flex-col gap-5">
-                <label for="name">Name</label>
-                <input id="name" name="name" type="text" required class="border border-gray-400 p-2">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" required class="border border-gray-400 p-2">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" required class="border border-gray-400 p-2">
-                </textarea>
-                <button type="submit" class="bg-black text-white p-3 rounded-[15px] hover:bg-red-500">
-                    Send Message
-                </button>
+
+        <!-- SERVICES -->
+        <section id="services" class="space-section mx-auto max-w-6xl">
+            <h2 class="mb-10 text-center text-3xl font-bold">My <span class="gradient-text">Services</span></h2>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <article class="card rounded-xl border p-6">
+                    <h3 class="mb-3 text-xl font-bold"> Web Design</h3>
+                    <p>Creating attractive and organized website layouts.</p>
+                </article>
+                <article class="card rounded-xl border p-6">
+                    <h3 class="mb-3 text-xl font-bold"> Frontend</h3>
+                    <p>Building interfaces with HTML, CSS, and JavaScript.</p>
+                </article>
+                <article class="card rounded-xl border p-6">
+                    <h3 class="mb-3 text-xl font-bold"> Responsive Design</h3>
+                    <p>Making websites work on mobile and desktop.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="space-section bg-white dark:bg-gray-900">
+            <h2 class="mb-10 text-center text-3xl font-bold">My <span class="gradient-text">Projects</span></h2>
+
+            <div class="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+                <article class="card rounded-xl border p-6">
+                    <div class="gradient mb-4 rounded-lg p-8 text-center text-5xl"></div>
+                    <h3 class="mb-2 text-xl font-bold">Fruit Stand Management</h3>
+                    <p>PHP and MySQL inventory and sales management system.</p>
+                </article>
+                <article class="card rounded-xl border p-6">
+                    <div class="mb-4 rounded-lg bg-blue-100 p-8 text-center text-5xl dark:bg-blue-950"></div>
+                    <h3 class="mb-2 text-xl font-bold">Portfolio Website</h3>
+                    <p>A personal website built with HTML and Tailwind CSS.</p>
+                </article>
+                <article class="card rounded-xl border p-6">
+                    <div class="mb-4 rounded-lg bg-pink-100 p-8 text-center text-5xl dark:bg-pink-950"></div>
+                    <h3 class="mb-2 text-xl font-bold">Library System</h3>
+                    <p>A practice project for database and record management.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="space-section mx-auto max-w-2xl">
+            <h2 class="mb-4 text-center text-3xl font-bold">Contact <span class="gradient-text">Me</span></h2>
+            <p class="mb-8 text-center">Have a question? Send me a message.</p>
+
+            <form id="contactForm" class="space-y-4 rounded-xl border p-6">
+                <input class="w-full rounded-lg border bg-transparent p-3" name="name" placeholder="Your Name" required>
+                <input class="w-full rounded-lg border bg-transparent p-3" name="email" type="email"
+                    placeholder="Your Email" required>
+                <textarea class="w-full rounded-lg border bg-transparent p-3" name="message" placeholder="Your Message"
+                    rows="5" required></textarea>
+                <button class="gradient w-full rounded-lg p-3 font-bold text-white">Send Message</button>
+                <p id="notice" class="accent" role="status"></p>
             </form>
         </section>
     </main>
-    <button id="switch"
-        class="bg-black text-white p-(12px) rounded-[10px] transition-colors duration-500 ease-in-out hover:bg-pink-500">switch</button>
-    <button id="toggledark"
-        class="bg-black text-white p-(12px) rounded-[10px] transition-colors duration-500 ease-in-out hover:bg-pink-500">Toggledark</button>
-    <script src="script.js"></script>
-    <script>
-        const toggleDarkButton = document.querySelector('#toggledark');
-        const html = document.querySelector('html');
 
-        toggleDarkButton.addEventListener('click', function () {
-            html.classList.toggle('dark');
+    <footer class="border-t p-6 text-center">
+        <span id="year"></span> Nicole De Leon. Made with
+    </footer>
+
+    <script>
+        const body = document.body;
+        const darkBtn = document.getElementById("darkBtn");
+        const colorBtn = document.getElementById("colorBtn");
+        const menuBtn = document.getElementById("menuBtn");
+        const menu = document.getElementById("mobileMenu");
+
+        // Restore saved settings
+        if (localStorage.mode === "dark") body.classList.add("dark");
+        if (localStorage.color === "blue") body.classList.add("blue-theme");
+
+        function updateButtons() {
+            darkBtn.textContent = body.classList.contains("dark") ? "" : "";
+            colorBtn.textContent = body.classList.contains("blue-theme") ? "" : "";
+        }
+
+        updateButtons();
+
+        darkBtn.onclick = () => {
+            body.classList.toggle("dark");
+            localStorage.mode = body.classList.contains("dark") ? "dark" : "light";
+            updateButtons();
+        };
+
+        colorBtn.onclick = () => {
+            body.classList.toggle("blue-theme");
+            localStorage.color = body.classList.contains("blue-theme") ? "blue" : "purple";
+            updateButtons();
+        };
+
+        menuBtn.onclick = () => {
+            menu.classList.toggle("hidden");
+            menu.classList.toggle("flex");
+        };
+
+        menu.querySelectorAll("a").forEach(link => {
+            link.onclick = () => {
+                menu.classList.add("hidden");
+                menu.classList.remove("flex");
+            };
         });
+
+        document.getElementById("contactForm").onsubmit = event => {
+            event.preventDefault();
+            document.getElementById("notice").textContent =
+                "Thanks! This demo form does not send emails yet.";
+            event.target.reset();
+        };
+
+        document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 
 </body>

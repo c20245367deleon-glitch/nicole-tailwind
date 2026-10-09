@@ -6,9 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style type="text/tailwindcss"> @custom-variant dark (&:where(.dark, .dark *));
-    </style>
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+
+@layer components {
+.btn-primary {
+@apply px-6 py-3 bg-red-800 text-white hover:bg-orange-400 transition-colors dark:bg-slate-700;
+}
+}
+</style>
 </head>
+<div class="flex justify-center gap-4 my-5">
+    <button id="switch"
+        class="bg-black text-white p-3 rounded-[20px] transition-colors duration-600 ease-in-out hover:bg-yellow-500">
+        SWITCH
+    </button>
+    <button id="toggledark"
+        class="bg-black text-white p-3 rounded-[20px] transition-colors duration-600 ease-in-out hover:bg-yellow-500">
+        Toggledark
+    </button>
+</div>
 
 <body class="text-center dark:bg-slate-900 bg-white text-slate-900 dark:text-white">
     <h1 class="text-3xl font-bold">NICOLE DE LEON</h1>

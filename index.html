@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nicole De Leon | Portfolio</title>
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+    </style>
 
     <style>
         :root {
@@ -13,14 +18,18 @@
             --light: #910c74;
         }
 
+        * {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            transition: .3s;
+            transition: background-color .5s, color .5s;
         }
 
         body.blue-theme {
-            --accent: #2563eb;
-            --light: #06b6d4;
+            --accent: #8d0d67;
+            --light: #312691;
         }
 
         .gradient {
@@ -33,221 +42,574 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .accent {
-            color: var(--accent);
+        .space-section {
+            padding: 70px 20px;
         }
 
         .card {
-            transition: .3s;
+            transition: transform .3s;
         }
 
         .card:hover {
             transform: translateY(-5px);
         }
 
-        .space-section {
-            padding: 70px 20px;
+        button, a {
+            cursor: pointer;
+            transition: background-color .3s, color .3s;
+        }
+
+        button:focus-visible, a:focus-visible {
+            outline: 2px solid #c084fc;
+            outline-offset: 3px;
+        }
+
+        .intro-name {
+            color: #e50914;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        .action-btn {
+            background: #303a46;
+            color: white;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+
+        .action-btn:hover {
+            background: #4b5969;
+        }
+
+        .demo-box {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            color: white;
+            font-weight: bold;
+            background: linear-gradient(135deg, #7e22ce, #db2777);
+            margin: 25px auto;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
         }
     </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-white">
 
-    <!-- NAVBAR -->
-    <header class="sticky top-0 z-10 border-b bg-white/90 p-4 backdrop-blur dark:bg-gray-950/90">
-        <nav class="mx-auto flex max-w-6xl items-center justify-between">
-            <a href="#home" class="text-xl font-bold gradient-text">Nicole.dev</a>
+<header class="sticky top-0 z-50 bg-white/90 shadow dark:bg-gray-900/90">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between p-4">
+        <a href="#home" class="text-xl font-bold gradient-text">Nicole.deleon</a>
 
-            <div class="hidden gap-5 md:flex">
-                <a href="#services">Services</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </div>
+        <div class="hidden items-center gap-5 md:flex">
+            <a href="#about" class="hover:text-purple-500">About</a>
+            <a href="#services" class="hover:text-purple-500">Services</a>
+            <a href="#projects" class="hover:text-purple-500">Projects</a>
+            <a href="#demo" class="hover:text-purple-500">GSAP Demo</a>
+            <a href="#contact" class="hover:text-purple-500">Contact</a>
 
-            <div class="flex gap-2">
-                <button id="colorBtn" class="rounded-lg border px-3 py-2"></button>
-                <button id="darkBtn" class="rounded-lg border px-3 py-2"></button>
-                <button id="menuBtn" class="rounded-lg border px-3 py-2 md:hidden"></button>
-            </div>
-        </nav>
+            <button id="colorBtn" class="rounded-lg bg-purple-700 px-3 py-2 text-white">
+                Change Theme
+            </button>
 
-        <div id="mobileMenu" class="hidden flex-col gap-4 p-4 md:hidden">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <button id="darkBtn" class="rounded-lg bg-gray-200 px-3 py-2 text-gray-900 dark:bg-gray-700 dark:text-white">
+                Light Mode
+            </button>
         </div>
-    </header>
 
-    <main>
-        <!-- HOME -->
-        <section id="home" class="space-section mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
-            <div>
-                <p class="mb-3 font-bold accent">WELCOME TO MY PORTFOLIO</p>
-                <h1 class="mb-4 text-4xl font-extrabold sm:text-6xl">
-                    Hi, I'm <span class="gradient-text">Nicole De Leon</span>
-                </h1>
-                <h2 class="mb-4 text-2xl font-bold">Aspiring Web Developer</h2>
-                <p class="mb-6 leading-7 text-gray-600 dark:text-gray-300">
-                    I enjoy creating beautiful, responsive websites using HTML,
-                    CSS, JavaScript, and Tailwind CSS.
-                </p>
-                <a href="#projects" class="gradient rounded-lg px-5 py-3 font-bold text-white">View Projects</a>
-                <a href="#contact" class="ml-2 inline-block rounded-lg border px-5 py-3">Contact Me</a>
+        <button id="menuBtn" class="text-2xl md:hidden"
+                aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </nav>
+
+    <div id="mobileMenu" class="hidden flex-col gap-4 p-5 md:hidden">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#demo">GSAP Demo</a>
+        <a href="#contact">Contact</a>
+
+        <button id="mobileDarkBtn" class="rounded-lg bg-purple-700 p-2 text-white">
+            Toggle Dark Mode
+        </button>
+
+        <button id="mobileColorBtn" class="rounded-lg bg-gray-700 p-2 text-white">
+            Change Theme
+        </button>
+    </div>
+</header>
+
+<main>
+    <!-- HOME -->
+    <section id="home" class="space-section mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
+        <div>
+            <p class="mb-3 text-purple-500">WELCOME TO MY PORTFOLIO</p>
+
+            <h1 id="heroTitle" class="intro-name mb-4 text-3xl font-bold md:text-5xl">
+                Nicole De Leon
+            </h1>
+
+            <div class="mb-6 flex flex-wrap gap-2">
+                <button id="sendMessageBtn" class="action-btn">Send Message</button>
+                <button id="replayBtn" class="action-btn">Replay Timeline</button>
+                <button id="heroDarkBtn" class="action-btn">Toggle Dark Mode</button>
             </div>
 
-            <div class="flex justify-center">
-                <div
-                    class="gradient flex h-64 w-64 items-center justify-center rounded-full text-7xl font-bold text-white shadow-xl">
-                    ND
-                </div>
+            <h2 class="mb-4 text-2xl font-semibold">Aspiring Web Developer</h2>
+
+            <p class="mb-6 leading-7 text-gray-600 dark:text-gray-300">
+                I create simple, responsive, and user-friendly websites
+                while continuously learning new technologies.
+            </p>
+
+            <a href="#projects" class="gradient inline-block rounded-lg px-6 py-3 text-white">
+                View My Projects
+            </a>
+
+            <a href="#contact" class="ml-3 inline-block rounded-lg border border-purple-500 px-6 py-3">
+                Contact Me
+            </a>
+        </div>
+
+        <div class="flex justify-center">
+            <div id="profileCircle"
+                 class="gradient flex h-60 w-60 items-center justify-center rounded-full text-2xl font-bold text-white shadow-2xl">
+                GOD IS GOOD
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- ABOUT -->
-        <section id="about" class="space-section bg-white dark:bg-gray-900">
-            <div class="mx-auto max-w-4xl text-center">
-                <h2 class="mb-6 text-3xl font-bold">About <span class="gradient-text">Me</span></h2>
-                <p class="leading-8 text-gray-600 dark:text-gray-300">
-                    I am Nicole De Leon, an aspiring web developer passionate about
-                    technology and website design. I am continuously improving my
-                    programming skills and learning to create user-friendly websites.
-                </p>
-
-                <div class="mt-8 grid gap-5 sm:grid-cols-3">
-                    <div class="card rounded-xl bg-purple-50 p-6 dark:bg-gray-800">
-                        <h3 class="mb-2 font-bold"> Web Development</h3>
-                        <p>Learning to build websites.</p>
-                    </div>
-                    <div class="card rounded-xl bg-pink-50 p-6 dark:bg-gray-800">
-                        <h3 class="mb-2 font-bold"> Creative Design</h3>
-                        <p>Exploring colors and layouts.</p>
-                    </div>
-                    <div class="card rounded-xl bg-blue-50 p-6 dark:bg-gray-800">
-                        <h3 class="mb-2 font-bold"> Learning</h3>
-                        <p>Developing new skills.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SERVICES -->
-        <section id="services" class="space-section mx-auto max-w-6xl">
-            <h2 class="mb-10 text-center text-3xl font-bold">My <span class="gradient-text">Services</span></h2>
+    <!-- ABOUT -->
+    <section id="about" class="space-section bg-gray-100 dark:bg-gray-900">
+        <div class="mx-auto max-w-6xl">
+            <h2 class="mb-10 text-center text-3xl font-bold">About Me</h2>
 
             <div class="grid gap-6 md:grid-cols-3">
-                <article class="card rounded-xl border p-6">
-                    <h3 class="mb-3 text-xl font-bold"> Web Design</h3>
-                    <p>Creating attractive and organized website layouts.</p>
+                <article class="card rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+                    <h3 class="gradient-text mb-3 text-xl font-bold">Web Development</h3>
+                    <p>Learning to build functional websites using HTML, CSS, JavaScript, and PHP.</p>
                 </article>
-                <article class="card rounded-xl border p-6">
-                    <h3 class="mb-3 text-xl font-bold"> Frontend</h3>
-                    <p>Building interfaces with HTML, CSS, and JavaScript.</p>
-                </article>
-                <article class="card rounded-xl border p-6">
-                    <h3 class="mb-3 text-xl font-bold"> Responsive Design</h3>
-                    <p>Making websites work on mobile and desktop.</p>
-                </article>
-            </div>
-        </section>
 
-        <!-- PROJECTS -->
-        <section id="projects" class="space-section bg-white dark:bg-gray-900">
-            <h2 class="mb-10 text-center text-3xl font-bold">My <span class="gradient-text">Projects</span></h2>
+                <article class="card rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+                    <h3 class="gradient-text mb-3 text-xl font-bold">Creative Design</h3>
+                    <p>Creating clean layouts with attention to usability and appearance.</p>
+                </article>
 
-            <div class="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
-                <article class="card rounded-xl border p-6">
-                    <div class="gradient mb-4 rounded-lg p-8 text-center text-5xl"></div>
-                    <h3 class="mb-2 text-xl font-bold">Fruit Stand Management</h3>
-                    <p>PHP and MySQL inventory and sales management system.</p>
-                </article>
-                <article class="card rounded-xl border p-6">
-                    <div class="mb-4 rounded-lg bg-blue-100 p-8 text-center text-5xl dark:bg-blue-950"></div>
-                    <h3 class="mb-2 text-xl font-bold">Portfolio Website</h3>
-                    <p>A personal website built with HTML and Tailwind CSS.</p>
-                </article>
-                <article class="card rounded-xl border p-6">
-                    <div class="mb-4 rounded-lg bg-pink-100 p-8 text-center text-5xl dark:bg-pink-950"></div>
-                    <h3 class="mb-2 text-xl font-bold">Library System</h3>
-                    <p>A practice project for database and record management.</p>
+                <article class="card rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+                    <h3 class="gradient-text mb-3 text-xl font-bold">Continuous Learning</h3>
+                    <p>Improving my programming skills by building projects and practicing coding.</p>
                 </article>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- CONTACT -->
-        <section id="contact" class="space-section mx-auto max-w-2xl">
-            <h2 class="mb-4 text-center text-3xl font-bold">Contact <span class="gradient-text">Me</span></h2>
-            <p class="mb-8 text-center">Have a question? Send me a message.</p>
+    <!-- SERVICES -->
+    <section id="services" class="space-section mx-auto max-w-6xl">
+        <h2 class="mb-10 text-center text-3xl font-bold">My Services</h2>
 
-            <form id="contactForm" class="space-y-4 rounded-xl border p-6">
-                <input class="w-full rounded-lg border bg-transparent p-3" name="name" placeholder="Your Name" required>
-                <input class="w-full rounded-lg border bg-transparent p-3" name="email" type="email"
-                    placeholder="Your Email" required>
-                <textarea class="w-full rounded-lg border bg-transparent p-3" name="message" placeholder="Your Message"
-                    rows="5" required></textarea>
-                <button class="gradient w-full rounded-lg p-3 font-bold text-white">Send Message</button>
-                <p id="notice" class="accent" role="status"></p>
-            </form>
-        </section>
-    </main>
+        <div class="grid gap-6 md:grid-cols-3">
+            <article class="card rounded-xl border border-gray-200 p-6 dark:border-gray-700">
+                <h3 class="gradient-text mb-3 text-xl font-bold">Web Design</h3>
+                <p>Simple and attractive website layouts.</p>
+            </article>
 
-    <footer class="border-t p-6 text-center">
-        <span id="year"></span> Nicole De Leon. Made with
-    </footer>
+            <article class="card rounded-xl border border-gray-200 p-6 dark:border-gray-700">
+                <h3 class="gradient-text mb-3 text-xl font-bold">Frontend Development</h3>
+                <p>Interactive website interfaces using HTML, CSS, and JavaScript.</p>
+            </article>
 
-    <script>
-        const body = document.body;
-        const darkBtn = document.getElementById("darkBtn");
-        const colorBtn = document.getElementById("colorBtn");
-        const menuBtn = document.getElementById("menuBtn");
-        const menu = document.getElementById("mobileMenu");
+            <article class="card rounded-xl border border-gray-200 p-6 dark:border-gray-700">
+                <h3 class="gradient-text mb-3 text-xl font-bold">Responsive Design</h3>
+                <p>Layouts that adapt to desktop, tablet, and mobile screens.</p>
+            </article>
+        </div>
+    </section>
 
-        // Restore saved settings
-        if (localStorage.mode === "dark") body.classList.add("dark");
-        if (localStorage.color === "blue") body.classList.add("blue-theme");
+    <!-- PROJECTS -->
+    <section id="projects" class="space-section bg-gray-100 dark:bg-gray-900">
+        <div class="mx-auto max-w-6xl">
+            <h2 class="mb-10 text-center text-3xl font-bold">My Projects</h2>
 
-        function updateButtons() {
-            darkBtn.textContent = body.classList.contains("dark") ? "" : "";
-            colorBtn.textContent = body.classList.contains("blue-theme") ? "" : "";
+            <div class="grid gap-6 md:grid-cols-3">
+                <article class="card rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+                    <h3 class="gradient-text mb-3 text-xl font-bold">Fruit Stand Management</h3>
+                    <p>A system for managing fruit inventory, sales, and reports.</p>
+                </article>
+
+                <article class="card rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+                    <h3 class="gradient-text mb-3 text-xl font-bold">Portfolio Website</h3>
+                    <p>A personal portfolio showcasing my skills and projects.</p>
+                </article>
+
+                <article class="card rounded-xl bg-white p-6 shadow dark:bg-gray-800">
+                    <h3 class="gradient-text mb-3 text-xl font-bold">Library System</h3>
+                    <p>A library management project for organizing books and publishers.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- GSAP DEMO -->
+    <section id="demo" class="space-section mx-auto max-w-4xl">
+        <h2 class="mb-4 text-center text-3xl font-bold">GSAP Animation Demo</h2>
+
+        <p class="mb-8 text-center text-gray-600 dark:text-gray-300">
+            Try gsap.to(), gsap.from(), and gsap.fromTo().
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-3">
+            <button id="demoTo" class="action-btn">GSAP.to()</button>
+            <button id="demoFrom" class="action-btn">GSAP.from()</button>
+            <button id="demoFromTo" class="action-btn">GSAP.fromTo()</button>
+            <button id="demoReset" class="action-btn">Reset Demo</button>
+        </div>
+
+        <div id="demoBox" class="demo-box">GSAP</div>
+
+        <p id="demoDescription" role="status"
+           class="mt-5 text-center text-sm text-gray-600 dark:text-gray-300">
+            Choose an animation above to try it.
+        </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="space-section mx-auto max-w-3xl">
+        <h2 class="mb-4 text-center text-3xl font-bold">Contact Me</h2>
+
+        <p class="mb-8 text-center text-gray-600 dark:text-gray-300">
+            Have a question or project idea? Send me a message.
+        </p>
+
+        <form id="contactForm" class="space-y-4">
+            <input name="name" type="text" placeholder="Your Name" required
+                   class="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+
+            <input name="email" type="email" placeholder="Your Email" required
+                   class="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+
+            <textarea name="message" placeholder="Your Message" rows="5" required
+                      class="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white"></textarea>
+
+            <button type="submit" class="gradient w-full rounded-lg p-3 font-semibold text-white">
+                Send Message
+            </button>
+
+            <p id="notice" role="status" class="text-center"></p>
+        </form>
+    </section>
+</main>
+
+<footer class="bg-gray-900 p-6 text-center text-white">
+    <p>© <span id="year"></span> Nicole De Leon. All rights reserved.</p>
+</footer>
+
+<script>
+    const root = document.documentElement;
+    const body = document.body;
+
+    const darkBtn = document.getElementById("darkBtn");
+    const mobileDarkBtn = document.getElementById("mobileDarkBtn");
+    const heroDarkBtn = document.getElementById("heroDarkBtn");
+
+    const colorBtn = document.getElementById("colorBtn");
+    const mobileColorBtn = document.getElementById("mobileColorBtn");
+
+    const mobileMenu = document.getElementById("mobileMenu");
+    const menuBtn = document.getElementById("menuBtn");
+
+    const heroTitle = document.getElementById("heroTitle");
+    const profileCircle = document.getElementById("profileCircle");
+    const demoBox = document.getElementById("demoBox");
+    const demoDescription = document.getElementById("demoDescription");
+
+    // Restore saved settings
+    try {
+        if (localStorage.getItem("mode") === "light") {
+            root.classList.remove("dark");
+        } else {
+            root.classList.add("dark");
         }
 
+        if (localStorage.getItem("color") === "blue") {
+            body.classList.add("blue-theme");
+        }
+    } catch (error) {
+        console.warn("Saved preferences unavailable.");
+    }
+
+    function updateButtons() {
+        const isDark = root.classList.contains("dark");
+        const isBlue = body.classList.contains("blue-theme");
+
+        darkBtn.textContent = isDark ? "Light Mode" : "Dark Mode";
+        mobileDarkBtn.textContent = isDark ? "Light Mode" : "Dark Mode";
+        heroDarkBtn.textContent = isDark ? "Toggle Light Mode" : "Toggle Dark Mode";
+
+        colorBtn.textContent = isBlue ? "Purple Theme" : "Change Theme";
+        mobileColorBtn.textContent = isBlue ? "Purple Theme" : "Change Theme";
+    }
+
+    // Dark mode with rotation animation
+    function toggleDarkMode() {
+        const buttons = [darkBtn, mobileDarkBtn, heroDarkBtn];
+
+        if (typeof gsap !== "undefined") {
+            gsap.to(buttons, {
+                rotation: 360,
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => gsap.set(buttons, { rotation: 0 })
+            });
+        }
+
+        root.classList.toggle("dark");
+
+        try {
+            localStorage.setItem(
+                "mode",
+                root.classList.contains("dark") ? "dark" : "light"
+            );
+        } catch (error) {}
+
         updateButtons();
+    }
 
-        darkBtn.onclick = () => {
-            body.classList.toggle("dark");
-            localStorage.mode = body.classList.contains("dark") ? "dark" : "light";
-            updateButtons();
-        };
+    [darkBtn, mobileDarkBtn, heroDarkBtn].forEach(button => {
+        button.addEventListener("click", toggleDarkMode);
+    });
 
-        colorBtn.onclick = () => {
-            body.classList.toggle("blue-theme");
-            localStorage.color = body.classList.contains("blue-theme") ? "blue" : "purple";
-            updateButtons();
-        };
+    // Change gradient theme
+    function toggleColor() {
+        body.classList.toggle("blue-theme");
 
-        menuBtn.onclick = () => {
-            menu.classList.toggle("hidden");
-            menu.classList.toggle("flex");
-        };
+        try {
+            localStorage.setItem(
+                "color",
+                body.classList.contains("blue-theme") ? "blue" : "purple"
+            );
+        } catch (error) {}
 
-        menu.querySelectorAll("a").forEach(link => {
-            link.onclick = () => {
-                menu.classList.add("hidden");
-                menu.classList.remove("flex");
-            };
+        updateButtons();
+    }
+
+    [colorBtn, mobileColorBtn].forEach(button => {
+        button.addEventListener("click", toggleColor);
+    });
+
+    // Mobile menu
+    menuBtn.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("flex");
+
+        mobileMenu.classList.toggle("hidden", !isOpen);
+        mobileMenu.classList.toggle("flex", isOpen);
+        menuBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            mobileMenu.classList.remove("flex");
+            menuBtn.setAttribute("aria-expanded", "false");
+        });
+    });
+
+    // Scroll to contact form
+    document.getElementById("sendMessageBtn").addEventListener("click", () => {
+        document.getElementById("contact").scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+
+    // Full introduction timeline
+    let introTimeline;
+
+    function createIntroTimeline() {
+        if (typeof gsap === "undefined") return null;
+
+        return gsap.timeline({
+            paused: true,
+            defaults: {
+                duration: 0.6,
+                ease: "power2.out"
+            }
+        })
+        .from("nav a", {
+            y: -20,
+            opacity: 0,
+            stagger: 0.1,
+            ease: "bounce.out"
+        })
+        .from(".intro-name", {
+            y: -40,
+            opacity: 0,
+            ease: "bounce.out"
+        }, "-=0.2")
+        .from(profileCircle, {
+            scale: 0,
+            opacity: 0,
+            ease: "elastic.out(1, 0.5)"
+        }, "-=0.2")
+        .from(".card", {
+            y: 40,
+            opacity: 0,
+            stagger: 0.12,
+            ease: "bounce.out"
+        }, "-=0.2");
+    }
+
+    // Replay the entire timeline
+    document.getElementById("replayBtn").addEventListener("click", () => {
+        if (typeof gsap === "undefined") return;
+
+        if (introTimeline) introTimeline.kill();
+
+        gsap.set(["nav a", ".intro-name", profileCircle, ".card"], {
+            clearProps: "all"
         });
 
-        document.getElementById("contactForm").onsubmit = event => {
-            event.preventDefault();
-            document.getElementById("notice").textContent =
-                "Thanks! This demo form does not send emails yet.";
-            event.target.reset();
-        };
+        introTimeline = createIntroTimeline();
+        if (introTimeline) introTimeline.play(0);
+    });
 
-        document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+    // H1 gsap.to() animation on double-click
+    heroTitle.addEventListener("dblclick", () => {
+        if (typeof gsap === "undefined") return;
+
+        gsap.to(heroTitle, {
+            rotation: 5,
+            scale: 1.08,
+            duration: 0.25,
+            yoyo: true,
+            repeat: 3,
+            ease: "power1.inOut"
+        });
+    });
+
+    // GSAP demo: gsap.to()
+    document.getElementById("demoTo").addEventListener("click", () => {
+        if (typeof gsap === "undefined") return;
+
+        gsap.to(demoBox, {
+            x: 100,
+            rotation: 180,
+            duration: 0.7,
+            ease: "bounce.out"
+        });
+
+        demoDescription.textContent =
+            "gsap.to(): animates from the current state to the values you provide.";
+    });
+
+    // GSAP demo: gsap.from()
+    document.getElementById("demoFrom").addEventListener("click", () => {
+        if (typeof gsap === "undefined") return;
+
+        gsap.from(demoBox, {
+            y: -70,
+            opacity: 0,
+            scale: 0.5,
+            duration: 0.8,
+            ease: "bounce.out"
+        });
+
+        demoDescription.textContent =
+            "gsap.from(): animates from the provided values to the current state.";
+    });
+
+    // GSAP demo: gsap.fromTo()
+    document.getElementById("demoFromTo").addEventListener("click", () => {
+        if (typeof gsap === "undefined") return;
+
+        gsap.fromTo(
+            demoBox,
+            {
+                rotation: -180,
+                scale: 0.5,
+                opacity: 0.3,
+                x: -100
+            },
+            {
+                rotation: 0,
+                scale: 1,
+                opacity: 1,
+                x: 0,
+                duration: 0.8,
+                ease: "elastic.out(1, 0.5)"
+            }
+        );
+
+        demoDescription.textContent =
+            "gsap.fromTo(): specifies both the starting and ending values.";
+    });
+
+    // Reset demo
+    document.getElementById("demoReset").addEventListener("click", () => {
+        if (typeof gsap === "undefined") return;
+
+        gsap.killTweensOf(demoBox);
+        gsap.set(demoBox, {
+            clearProps: "all"
+        });
+
+        demoDescription.textContent =
+            "Choose an animation above to try it.";
+    });
+
+    // Button hover and click animations
+    if (typeof gsap !== "undefined") {
+        document.querySelectorAll("button").forEach(button => {
+            button.addEventListener("mouseenter", () => {
+                gsap.to(button, {
+                    y: -3,
+                    scale: 1.04,
+                    duration: 0.2,
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            });
+
+            button.addEventListener("mouseleave", () => {
+                gsap.to(button, {
+                    y: 0,
+                    scale: 1,
+                    duration: 0.2,
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            });
+        });
+
+        // Initial page animation
+        introTimeline = createIntroTimeline();
+        if (introTimeline) introTimeline.play(0);
+    }
+
+    // Demo contact form
+    document.getElementById("contactForm").addEventListener("submit", event => {
+        event.preventDefault();
+
+        document.getElementById("notice").textContent =
+            "Thank you! This demo form does not send emails yet.";
+
+        event.target.reset();
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    updateButtons();
+</script>
 
 </body>
-
 </html>
